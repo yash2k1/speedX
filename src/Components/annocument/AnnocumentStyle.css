@@ -1,0 +1,26 @@
+.Annocument{
+    height: 300px;
+    width: 90%;
+    margin: 20px auto;
+    position: relative;
+}
+.video{
+    display: block;
+    width: 100%;
+    object-fit: fill;
+    height: 300px;
+    opacity: 0.8;
+}
+.videoText{
+    position: absolute;
+    z-index: 5;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+    /* color: var(--primaryColor); */
+    color: white;
+    /* color: #fbd760; */
+}

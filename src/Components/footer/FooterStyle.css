@@ -1,0 +1,76 @@
+.footer {
+  width: 100%;
+  background-color: #0f3460;
+  padding: 100px 0;
+  color: #fff;
+  background: var(--primaryColor);
+  /* background: black; */
+  display: flex;
+  justify-content: space-evenly;
+  
+}
+.fotterLogo:hover{
+cursor: pointer;
+}
+.fotterBlogExplaine{
+ text-align: center;
+}
+.footerContainer{
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content:  flex-start;
+  align-items: flex-start;
+}
+.footerContainer h1{
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+.footerContainer .the{
+  
+  color: white;
+}
+.footerContainer>h1>div {
+ width: fit-content;
+ height:35px;
+ margin-bottom: 0;
+}
+.footerContainer div,
+.footerContainer a{
+  margin-top: 10px;
+}
+.FooterNonActiveNav{
+  color: white;
+  text-decoration: none;
+}
+a{
+  text-decoration: none;
+  color: white;
+}
+.copyRight{
+  display: flex;
+}
+.fotterLogo{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.fotterLogoImg{
+  display: block;
+  height: 50px;
+
+}
+@media (max-width:750px) {
+  .footer {
+   flex-direction: column;
+   align-items: center;
+  }
+  .footerContainer{
+width: 100%;
+align-items: center;
+  }
+  .footer .siren{
+    font: normal normal bold 61px Montserrat;
+  }
+}

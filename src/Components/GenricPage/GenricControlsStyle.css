@@ -1,0 +1,41 @@
+.controls{
+    display: flex;
+    /* background: #F6F7F8; */
+    background-color: var(--primaryColor);
+    color: white;
+    width: 90%;
+    margin:20px auto;
+    justify-content: space-between;
+    font-size: 20px;
+    height: 50px;
+    border: 1px solid black;
+    align-items: center;
+    /* padding:0px 20px; */
+    
+}
+.leftControls{
+    display: flex;
+}
+.totalProduct,
+.sortProduct{
+    margin-left: 20px;
+}
+.sortProduct{
+    transition: all 0.3s ease-in;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.sortProduct:hover{
+border-bottom: 4px solid var(--SecondaryColor);
+color: var(--SecondaryColor);
+}
+.Orientation{
+    display: flex;
+    margin-right: 20px;
+}
+.gallary:hover,
+.list:hover{
+color: rgb(150, 149, 149);
+cursor: pointer;
+}

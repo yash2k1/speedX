@@ -1,0 +1,25 @@
+h1>hr{
+    height: 3px;
+    border: 0;
+    width: 50%;
+    background:var(--primaryColor);
+
+}
+h1{
+    width: fit-content !important;
+    margin-bottom: 10px !important;
+}
+#loading-spin{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+}
+:root{
+    --primaryColor:#4A55A2;
+    /* --primaryColor:#fbd760; */
+    --SecondaryColor:#C5DFF8;
+}
+.hover:hover{
+    cursor: pointer;
+}
