@@ -170,16 +170,17 @@ overflow: hidden;
     border-bottom-right-radius: 3px;
    
 }
-.navRegisterBtn:hover{
-cursor: pointer;
-color: gray;
-}
-
 .dropDownArrow:hover{
     background:rgb(94, 121, 194);
     cursor: pointer;
   
 }
+.navRegisterBtn:hover{
+cursor: pointer;
+color: gray;
+}
+
+
 .dropDown{
     display: flex;
     flex-direction: column;
@@ -356,13 +357,21 @@ background: red;
     margin: 0 !important;
 }
 .search-bar{
-    overflow: hidden;
-    border-radius: 15px;
-    border: 2px solid black;
+    /* overflow: hidden; */
+    /* border-radius: 15px; */
+    /* border: 2px solid black; */
+    border: 0;
+
 }
 .search-bar>input{
     border-radius: 15px;
-    
+    height: 100%;
+   
+}
+.searchInput{
+       display: flex;
+    align-items: center;
+    justify-content: center;  
 }
 .search{
     border: 0;

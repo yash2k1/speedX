@@ -12,18 +12,6 @@ const GenricControls = ({ChangeView,categoryWiseData}) => {
   let url=categoryParam+subCategoryQuery; 
   
   console.log("sfsf",url) 
-  // console.log("ree",import.meta.env.VITE_ULR)
-  // const ChangeView=(viewType)=>{
-  //   setView(viewType=>viewType==="ProductGallary"?"ProductList":"ProductGallary")
-  // }
-  // <div className='sortProduct' htmlFor="sortBy">SortBy 
-  //     <select id=' sortBy' className="sortBy">
-  //   <option value="sortByHighDiscount">highDiscount</option>
-  //   <option value="sortByPriceLtoH">Price low to high</option>
-  //   <option value="sortByPriceHtoL">Price hight to low</option>
-  //   <option value="sortByRating">Rating</option>
-  //     </select>
-  //     </div>
   const[selected,setSelected]=useState("none");
   const navSortByArrow=useRef();
   const navigate=useNavigate();
@@ -49,7 +37,7 @@ else navigate(`${url}?${query}`);
                       navigate(`/${categoryWiseData[0].category}`)}}>SortBy
                       </div>
                     
-                <div className="dropDownArrow"
+                <div className="sortDropDownArrow"
                   onClick={(e)=>{
                     console.log( e.target)
                     selected==="flex"?
