@@ -113,13 +113,13 @@ setProductQnt({
   const tostNotify=()=>toast("Thanks for shoping...");
   const checkout=()=>{
     tostNotify();
+    setProductQnt({
+      "productId":"clear",
+      "productQnt":0
+    })
     setTimeout(()=>{
       navigate("/");
       dispatch(addItem(0));
-      setProductQnt({
-        "productId":"clear",
-        "productQnt":0
-      })
       localStorage.removeItem("cart");
     },2000);
   }
