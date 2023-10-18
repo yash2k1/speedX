@@ -38,7 +38,6 @@ const Cart = () => {
       
     },[]
   )
-  const tostNotify=()=>toast("Thanks for shoping...");
   useEffect(
     ()=>{
       
@@ -52,14 +51,6 @@ const Cart = () => {
                 setCartItem(res.data.user);
               }
             })
-          if(productQnt.productId==="clear"){
-            tostNotify();
-            setTimeout(()=>{
-              navigate("/");
-              dispatch(addItem(0));
-              localStorage.removeItem("cart");
-            },2000);
-          }  
     },[productQnt]);
 
   console.log(cartItem&&cartItem[0]?.product?.id)
@@ -119,12 +110,18 @@ setProductQnt({
   const [checkCoupon,setCheckCoupon]=useState(false);
   let total=0;
   // checkout function 
- 
+  const tostNotify=()=>toast("Thanks for shoping...");
   const checkout=()=>{
-    setProductQnt({
-      "productId":"clear",
-      "productQnt":0
-    })
+    tostNotify();
+    setTimeout(()=>{
+      navigate("/");
+      dispatch(addItem(0));
+      setProductQnt({
+        "productId":"clear",
+        "productQnt":0
+      })
+      localStorage.removeItem("cart");
+    },2000);
   }
   return (
     <>

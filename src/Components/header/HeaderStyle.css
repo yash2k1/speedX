@@ -48,9 +48,9 @@ a{
     display: flex;
     color: white !important;
     justify-content: space-around;
-    
 }
 .NavbarIteam{
+    text-decoration: none;
     transition: all 0.3s ease-in;
     display: flex;
     align-items: center;

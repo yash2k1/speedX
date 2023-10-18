@@ -15,6 +15,10 @@ cursor: pointer;
 .fotterBlogExplaine{
  text-align: center;
 }
+.footerContainer>a{
+color: #fff;
+text-decoration: none;
+}
 .footerContainer{
   width: 20%;
   display: flex;

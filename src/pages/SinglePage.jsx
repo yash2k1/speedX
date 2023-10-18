@@ -6,7 +6,6 @@ import Footer from '../Components/footer/Footer'
 import Wrapper from "../Components/flip cards/Wrapper"
 import FallBack from '../Components/Login&signUp/FallBack'
 const SinglePage = () => {
-
   return (
     <>
  {  localStorage.getItem("token")?
