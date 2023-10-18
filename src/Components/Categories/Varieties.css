@@ -55,6 +55,7 @@
     z-index: 3;
     overflow: hidden;
     border: 1px solid white;
+    border-radius: 10px;
     background-color: var(--SecondaryColor);
 }
 .varietiesBtn:hover{
