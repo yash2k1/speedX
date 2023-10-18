@@ -16,11 +16,10 @@ h1{
     transform:translate(-50%,-50%);
 }
 :root{
-    /* --primaryColor:#BEADFA; */
-    --primaryColor:#4A55A2;
-    /* --primaryColor:#fbd760; */
-    /* --SecondaryColor:#DFCCFB; */
-    --SecondaryColor:#C5DFF8;
+    --primaryColor:#a181fc;
+    --SecondaryColor:#c4d4ff;
+    /* --primaryColor:#4A55A2;
+    --SecondaryColor:#C5DFF8; */
 }
 .hover:hover{
     cursor: pointer;

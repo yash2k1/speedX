@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import Top from '../Components/header/Top';
 import Footer from '../Components/footer/Footer';
 import "./CartStyle.css";
-import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import {addItem} from "../feature/AddToCart";
 import { useDispatch } from 'react-redux';
 import FallBack from '../Components/Login&signUp/FallBack';
-import { useNavigate } from 'react-router-dom';
+import {loadStripe} from '@stripe/stripe-js';
+import LoadingSpin from 'react-loading-spin'
+
 const Cart = () => {
-  const navigate=useNavigate();
   const dispatch=useDispatch();
   const [cartItem,setCartItem]=useState("");
+  let total=0;
   const [productQnt,setProductQnt]=useState({
     "productId":"",
     "productQnt":0
@@ -20,6 +21,7 @@ const Cart = () => {
   // const baseUlr=
   const Token=JSON.parse(localStorage.getItem("token"))?.token;
   const baseUrl= `${import.meta.env.VITE_ULR}`;
+  // one time get data from server 
   useEffect(
     ()=>{
       axios.get(baseUrl+`/getCart/${JSON.parse(localStorage.getItem("token"))?.id}`,{
@@ -38,7 +40,7 @@ const Cart = () => {
       
     },[]
   )
-  const tostNotify=()=>toast("Thanks for shoping...");
+   // updating data in db 
   useEffect(
     ()=>{
       
@@ -52,14 +54,7 @@ const Cart = () => {
                 setCartItem(res.data.user);
               }
             })
-          if(productQnt.productId==="clear"){
-            tostNotify();
-            setTimeout(()=>{
-              navigate("/");
-              dispatch(addItem(0));
-              localStorage.removeItem("cart");
-            },2000);
-          }  
+        
     },[productQnt]);
 
   console.log(cartItem&&cartItem[0]?.product?.id)
@@ -117,23 +112,61 @@ setProductQnt({
   // const [subTotal,setSubTotal]=useState(0);
   const [coupon,setCoupon]=useState("");
   const [checkCoupon,setCheckCoupon]=useState(false);
-  let total=0;
-  // checkout function 
- 
-  const checkout=()=>{
-    setProductQnt({
-      "productId":"clear",
-      "productQnt":0
-    })
+
+  
+
+  
+    // payment integration
+    const makePayment = async()=>{
+      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_KEY);
+       console.log(localStorage.getItem("cart"))
+      const body = {
+          "products":JSON.parse(localStorage.getItem("cart"))
+      }
+      const headers = {
+          "Content-Type":"application/json"
+      }
+      const response = await fetch(`${import.meta.env.VITE_ULR}/checkout`,{
+          method:"POST",
+          headers:headers,
+          body:JSON.stringify(body)
+      });
+
+      const session = await response.json();
+
+      const result = stripe.redirectToCheckout({
+          sessionId:session.id
+      });
+      
+      if(result.error){
+          console.log(result.error);
+      }
   }
-  return (
-    <>
-  {  localStorage.getItem("token")?
+// render component --------------
+  if(!localStorage.getItem("token")){
+    return (<FallBack/>)
+  }else if(!cartItem){
+    return(
 <>
-
-<Top/>
-
-{(cartItem&&cartItem[0]?.product?.id)?<div className='cartSection'>
+{/* <Top/> */}
+      <div style={{ position:"absolute",left:"50%",top:"50%",transform:"translate(-50%,-50%)"}}>
+      <LoadingSpin
+             duration="3s"
+              timingFunction="ease-in"
+              primaryColor="#4A55A2"
+              secondaryColor="white"
+              numberOfRotationsInAnimation={2}/>
+              <div style={{transform:"translatex(-25%)"}}>Loading.. cart</div>
+      </div>
+      {/* <Footer/> */}
+      </>
+    )
+  }else if(cartItem[0]?.product?.id){
+   return (
+    <>
+    <Top/>
+   
+    <div className='cartSection'>
 
       <div className="cartHeader">
         <div className="leftCartHeader">Product</div>
@@ -186,35 +219,29 @@ setProductQnt({
           <div className="couponRow"><div className="couponApplied">coupon</div><div className="couponAppliedAmount">{checkCoupon?"10%":0}</div></div>
           <div className="totalRow"><div className="total">Total</div>
           <div className="totalAmount">
-            {checkCoupon?((cartItem.length*100)+(total*0.9)).toFixed(2):(-cartItem.length*100+(total*1)).toFixed(2) }<CurrencyRupeeIcon style={{fontSize:"0.9rem"}}/>
+            {checkCoupon?((cartItem.length*100)+(total*0.9)).toFixed(2):(cartItem.length*100+(total*1)).toFixed(2) }<CurrencyRupeeIcon style={{fontSize:"0.9rem"}}/>
           </div>
           </div>
-          <button className="checkout" onClick={checkout}>checkout</button>
+          <button className="checkout" onClick={makePayment}>checkout</button>
         </div>
       </div>
-   </div>:
-    <video className='cartVideo' autoPlay muted loop >
-          <source src="https://cdnl.iconscout.com/lottie/premium/preview-watermark/girl-doing-online-shopping-8643912-6879318.mp4?h=700" type="video/mp4" />
-        </video> 
-   }
+   </div>
+   <Footer/>
+    </>
+   )
+  }else{
+   return(
+    <>
+    <Top/>
+     <video className='cartVideo' autoPlay muted loop >
+    <source src="https://cdnl.iconscout.com/lottie/premium/preview-watermark/girl-doing-online-shopping-8643912-6879318.mp4?h=700" type="video/mp4" />
+  </video>
     <Footer/>
     </>
-    :
-    <FallBack/>
+   )
   }
-   <ToastContainer 
-    position="top-right"
-autoClose={1000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme='dark'/>
-    </>
-  )
+
+
 }
 
 export default Cart

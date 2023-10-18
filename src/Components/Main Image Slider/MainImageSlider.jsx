@@ -1,34 +1,22 @@
 import "./MainImageSliderStyle.css";
-import { useState ,useEffect} from "react";
+import { useState } from "react";
+import Carousel from 'react-bootstrap/Carousel';
+import 'bootstrap/dist/css/bootstrap.css'
+import headerBg from "../../assets/header-bg.svg"
 // import Categories from "./Categories"
-import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
-import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
+// import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
+// import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import { useNavigate } from "react-router-dom";
 function MainImageSlider({subCategoryWiseData}){
    const navigate=useNavigate();
-    let [currentIndex, setIndex]=useState(0);
-    const updateSilder=(val)=>{
-      let n=subCategoryWiseData.length;
-      return !subCategoryWiseData? 
-      setIndex(currentIndex=>currentIndex+1):
-      setIndex(currentIndex=>(currentIndex+val+n)%n);
-    }
-// auto slide
-useEffect(()=>{
-    const interval=  setInterval(()=>{   
-        updateSilder(1);
-},5000);
-return ()=>clearInterval(interval);
-},[currentIndex]);
-  
-// slide to right 
- function toForward(){
-   updateSilder(1);
- }
-// slide to left 
- function toBackward(){
-    updateSilder(-1);
- }
+   console.log(subCategoryWiseData)
+ 
+//  sliding
+const [index, setIndex] = useState(0);
+
+const handleSelect = (selectedIndex) => {
+  setIndex(selectedIndex);
+};
 //  smooth scrolling
 const handleScroll=()=>{
   window.scrollTo({
@@ -36,27 +24,29 @@ const handleScroll=()=>{
     behavior: "smooth",
   })
 }
-
-return(
-    <>   
-   
-    <div className="sliders">
+return (
+  <div className="slider-header">
+     <img className='header-image' src={headerBg} alt="not found" />
+  <Carousel id='home' activeIndex={index} onSelect={handleSelect}>
+  {  subCategoryWiseData&&subCategoryWiseData.map(item=>{
+       return(
+          <Carousel.Item  key={item.id}>
+          <img className='sliderImages' src={item.thumbnail} text="First slide" />
         
-    <div className="mainImageText ">
-        <b>Get what you want from the vast varrity</b>
-        <div className="imageText">{subCategoryWiseData[currentIndex].description} </div>
-        <button className="sliderBtn hover" onClick={()=>{
-          handleScroll()
-          navigate(`/${subCategoryWiseData[currentIndex].category}`)
-        }}>visit category</button>
-        </div>
-        <span className="image">
-        <img src={subCategoryWiseData[currentIndex].thumbnail} alt="not found" className="silderImages" id={subCategoryWiseData[currentIndex].id} />
-        <ChevronLeftRoundedIcon className="backwardMainPage" onClick={toBackward}/>
-    <ChevronRightRoundedIcon className="forwardMainPage" onClick={toForward} />
-        </span>
-      </div>
-    
-           </>
-       )}
+            <button className="mainImgSliderBtn" onClick={()=>{
+              handleScroll();
+              navigate(`/${item.category}`)
+            }}>View Category</button>
+            
+         
+        </Carousel.Item>
+       
+      )
+  })  
+   }
+   
+  </Carousel>
+  </div>
+)};
+
 export default MainImageSlider;

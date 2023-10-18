@@ -8,6 +8,8 @@ import Login from "./Components/Login&signUp/Login";
 import Register from "./Components/Login&signUp/Register";
 import Cart from "./pages/Cart";
 import FallBack from "./Components/Login&signUp/FallBack";
+import OnCancel from "./Components/payment Pages/OnCancel";
+import OnSucess from "./Components/payment Pages/OnSucess";
 
 const RoutesFile = () => {
   return (
@@ -20,6 +22,9 @@ const RoutesFile = () => {
         <Route path="/signUp" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/fallBack" element={<FallBack />} />
+        <Route path="/cancel" element={<OnCancel />} />
+        <Route path="/sucess" element={<OnSucess />} />
+        
       </Routes>
     </>
   );

@@ -58,8 +58,9 @@ a{
     color: white !important;
 }
 .NavbarIteam:hover{
-border-bottom: 4px solid var(--SecondaryColor);
-color: var(--SecondaryColor);
+/* border-bottom: 4px solid var(--SecondaryColor); */
+/* color: var(--SecondaryColor); */
+color: black !important;
 }
 .top-right{
    display: flex;
@@ -171,7 +172,7 @@ overflow: hidden;
    
 }
 .dropDownArrow:hover{
-    background:rgb(94, 121, 194);
+    background:var(--SecondaryColor);
     cursor: pointer;
   
 }

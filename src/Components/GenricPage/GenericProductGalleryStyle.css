@@ -88,6 +88,9 @@ object-fit: cover;
 
 /* btn */
 .ProductViewMore{
+    border-radius: 10px;
+}
+.ProductViewMore{
     width: 200px;
     height: 70px;
     transform: translate(0%,0%);

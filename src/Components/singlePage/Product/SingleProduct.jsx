@@ -8,73 +8,74 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import {addItem} from "../../../feature/AddToCart";
 import { useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+
 const SingleProduct = () => {
   const dispatch=useDispatch();
   const {category,id}=useParams();
   // console.log(category,id);
-    let [currentIndex, setIndex]=useState(0);
-    const [productData,setProductData]=useState("");
-    const baseUrl= `${import.meta.env.VITE_ULR}`;
+  let [currentIndex, setIndex]=useState(0);
+  const [productData,setProductData]=useState("");
+  const baseUrl= `${import.meta.env.VITE_ULR}`;
     const [productQnt,setProductQnt]=useState({
       "productId":"",
       "productQnt":"0"
     });
     // const [id]=useState("");
     useEffect(
-     ()=>{
-      const Token=JSON.parse(localStorage.getItem("token")).token;
-     
-     axios.get(`${baseUrl}/${category}/${id}`,{
-      headers:{
-          "authorization":"bearer "+Token
-               }
-  })
-     .then(res=>{
-      
-      if(res?.data?.err==="token expired"){
-        localStorage.removeItem('cart')
-        localStorage.removeItem('token')
+      ()=>{
+        const Token=JSON.parse(localStorage.getItem("token")).token;
+        
+        axios.get(`${baseUrl}/${category}/${id}`,{
+          headers:{
+            "authorization":"bearer "+Token
+          }
+        })
+        .then(res=>{
+          
+          if(res?.data?.err==="token expired"){
+            localStorage.removeItem('cart')
+            localStorage.removeItem('token')
           }
           setProductData(res.data.msg);
-    });
-     },[id]
-    )
-    // function for slider
-    const updateSilder=(val)=>{
-      let n=productData?.images?.length;
-      productData.images?
-         setIndex(currentIndex=>(currentIndex+val+n)%n):
-         setIndex(currentIndex=>currentIndex+1);
-    }
-
-// auto slide
-useEffect(()=>{
-    const interval=  setInterval(()=>{   
+        });
+      },[id]
+      )
+      // function for slider
+      const updateSilder=(val)=>{
+        let n=productData?.images?.length;
+        productData.images?
+        setIndex(currentIndex=>(currentIndex+val+n)%n):
+        setIndex(currentIndex=>currentIndex+1);
+      }
+      
+      // auto slide
+      useEffect(()=>{
+        const interval=  setInterval(()=>{   
+          updateSilder(1);
+        },5000);
+        return ()=>clearInterval(interval);
+      },[currentIndex]);
+      
+      // slide to right 
+      function toForward(){
         updateSilder(1);
-},5000);
-return ()=>clearInterval(interval);
-},[currentIndex]);
-  
-// slide to right 
- function toForward(){
-   updateSilder(1);
- }
-// slide to left 
- function toBackward(){
-    updateSilder(-1);
- }
-// chages in cart in db
+      }
+      // slide to left 
+      function toBackward(){
+        updateSilder(-1);
+      }
+      // item is added
+  const tostNotify=()=>toast("item added in your cart");
+// changes in cart in db
 useEffect(
-  ()=>{
-    
+  ()=>{  
     axios.post(baseUrl+"/changestocart", {
       "userId":JSON.parse(localStorage.getItem("token")).id,
       ...productQnt
           })
           .then(res=>{
-            console.log("ram ram",res.data,{...productQnt} )
-            
-          
+            console.log("ram ram",res.data,{...productQnt} )            
           })
   },[productQnt]);
 
@@ -166,9 +167,23 @@ setProductQnt({
         <li className='offer'>100K+ recent orders from this brand</li>
         <li className='offer'>2+ years on SpeedX</li>
       </ul>
-        <button className="sliderBtn hover" onClick={()=>{changesToCart(productData,1)}}>Add to Cart</button>
+        <button className="sliderBtn hover" onClick={()=>{
+          changesToCart(productData,1);
+          tostNotify();
+          }}>Add to Cart</button>
         </div>
       </div>}
+      <ToastContainer 
+position="top-right"
+autoClose={1000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="dark" />
            </>
     // <>
     
